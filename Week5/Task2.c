@@ -29,8 +29,10 @@ int main() {
     scanf("%ld", &n);
     while(p*q < n) { //semiprime array generator - pre-task
         while (p*q < n){
+            if ((p % 4 == 3) && (q % 4 == 3)) {
             arr[count] = p*q;
             count++;
+            }
             do {
                 q++;
             } while (PrimeExtractor(q) == 0);
@@ -39,16 +41,20 @@ int main() {
             p++;
         } while (PrimeExtractor(p) == 0);
         q = p;
+        do {
+            q++;
+        } while (PrimeExtractor(q) == 0);
     }
-    //for (int i = 0; i < count; i++){
-        //printf("%ld ",arr[i]);
-    //}
+    for (int i = 0; i < count; i++){
+        printf("%ld ",arr[i]);
+    }
+    printf("\n");
     for(int i = 1; i < count; i++){ //checksum - 1st subtask
         for(int j = 0; j < i; j++){
             int sum = arr[j] + arr[i];
             if (sum < n){
                 for (int k = 2; k <= sqrt(sum); k++){
-                    if((sum % k == 0) && (PrimeExtractor(k) == 1) && (PrimeExtractor(sum % k) == 1)){ // checking for semiprime
+                    if((sum % k == 0) && (PrimeExtractor(k) == 1) && (PrimeExtractor(sum/k) == 1) && (k % 4 == 3) && (sum/k % 4 == 3)){ // checking for semiprime
                         Parliament[Sumcount] = arr[i];
                         Perception[Sumcount] = arr[j];
                         Sumcount++;
@@ -57,7 +63,7 @@ int main() {
             }
         }
     }
-    if (Sumcount == 0) printf("Not available!"); else {
+    if (Sumcount == 0) printf("Not available! \n"); else {
         for (int i = 0; i < Sumcount; i++){
             printf("%ld %ld \n", Parliament[i], Perception[i]);
         }
@@ -66,7 +72,7 @@ int main() {
     int ava = 0;
     if (m < n){
                 for (int k = 2; k <= sqrt(m); k++){
-                    if((m % k == 0) && (PrimeExtractor(k) == 1) && (PrimeExtractor(m % k) == 1)){ 
+                    if((m % k == 0) && (PrimeExtractor(k) == 1) && (PrimeExtractor(m / k) == 1) && (k % 4 == 3) && (m/k % 4 == 3)){ 
                         ava++;
                         break;
                     }
